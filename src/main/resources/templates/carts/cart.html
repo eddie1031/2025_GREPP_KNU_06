@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <h1>장바구니 목록</h1>
+    </div>
+    <div>
+
+        <div th:each="item : ${cart.cartItems}">
+            <p>상품 코드 : [[ ${item.productCode} ]]</p>
+            <p>상품 이름 : [[ ${item.productName} ]]</p>
+            <p>상품 가격 : [[ ${item.productPrice} ]]</p>
+            <p>갯수 : [[ ${item.quantity} ]]</p>
+        </div>
+
+    </div>
+    <div>
+        <p>총 금액 : [[ ${cart.getTotalPrice()} ]]</p>
+    </div>
+    <div>
+        <button>
+            <a th:href="@{/view/payments/checkout/{accountCode}(accountCode=${accountCode})}">
+                결제하기
+            </a>
+        </button>
+    </div>
+</body>
+</html>

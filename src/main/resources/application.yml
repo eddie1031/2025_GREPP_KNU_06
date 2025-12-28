@@ -1,0 +1,30 @@
+spring:
+
+  application:
+    name: demo
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test-db
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+custom:
+  payments:
+    toss:
+      confirm-url: "https://api.tosspayments.com/v1/payments/confirm"
+      secrets: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
+
+  jwt:
+    secrets:
+      app-key: A5A10BC17B4E653C78BDD55FFFD9DEE3BE5790CD6F3F64DC1E82E791F9821C17
+    expiration: 600000000

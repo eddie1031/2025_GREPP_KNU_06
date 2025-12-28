@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    Success
+    <script>
+
+        process();
+
+        async function process() {
+
+            const searchParams = new URLSearchParams(window.location.search);
+
+            const orderCode = searchParams.get('orderId');
+            const paymentKey = searchParams.get('paymentKey');
+            const amount = searchParams.get('amount');
+
+            await fetch('/payments/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    orderCode,
+                    useDeposit: false,
+                    depositAmount: 0,
+                    paymentKey,
+                    amount
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                })
+
+
+        }
+
+    </script>
+</body>
+</html>
