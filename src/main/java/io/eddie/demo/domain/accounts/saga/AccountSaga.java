@@ -2,6 +2,8 @@ package io.eddie.demo.domain.accounts.saga;
 
 import io.eddie.demo.common.model.command.CreateCartCommand;
 import io.eddie.demo.common.model.event.AccountCreatedEvent;
+import io.eddie.demo.common.model.event.CartCreatedEvent;
+import io.eddie.demo.domain.accounts.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,11 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 @KafkaListener(
         topics = {
-                "${custom.kafka.topic.account.event}"
+                "${custom.kafka.topic.account.event}",
+                "${custom.kafka.topic.cart.event}"
         }
 )
 @RequiredArgsConstructor
 public class AccountSaga {
+
+    private final AccountService accountService;
 
     @Value("${custom.kafka.topic.cart.command}")
     private String cartCommandTopic;
@@ -31,6 +36,13 @@ public class AccountSaga {
 
         CreateCartCommand createCartCommand = new CreateCartCommand(event.accountCode());
         kafkaTemplate.send(cartCommandTopic, createCartCommand);
+
+    }
+
+    @KafkaHandler
+    public void handleEvent(@Payload CartCreatedEvent event) {
+
+        accountService.applyCartCode(event.accountCode(), event.cartCode());
 
     }
 

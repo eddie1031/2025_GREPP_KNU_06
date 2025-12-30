@@ -1,4 +1,7 @@
 package io.eddie.demo.common.model.event;
 
-public record CartCreatedEvent() {
+public record CartCreatedEvent(
+        String accountCode,
+        String cartCode
+) {
 }

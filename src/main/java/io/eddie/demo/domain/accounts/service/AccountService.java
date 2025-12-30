@@ -11,4 +11,6 @@ public interface AccountService {
     Account getByUsername(String username);
     Account getByAccountCode(String accountCode);
 
+    Account applyCartCode(String accountCode, String cartCode);
+
 }

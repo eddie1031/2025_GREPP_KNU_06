@@ -17,6 +17,9 @@ public class KafkaConfiguration {
     @Value("${custom.kafka.topic.cart.command}")
     private String cartCommandTopic;
 
+    @Value("${custom.kafka.topic.cart.event}")
+    private String cartEventTopic;
+
     @Bean
     public KafkaTemplate<String, Object> kafkaTemplate(
             ProducerFactory<String, Object> producerFactory
@@ -33,6 +36,12 @@ public class KafkaConfiguration {
     @Bean
     public NewTopic createCartCommandTopic() {
         return TopicBuilder.name(cartCommandTopic)
+                .build();
+    }
+
+    @Bean
+    public NewTopic createCartEventTopic() {
+        return TopicBuilder.name(cartEventTopic)
                 .build();
     }
 

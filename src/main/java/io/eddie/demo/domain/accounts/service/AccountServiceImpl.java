@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -42,8 +44,8 @@ public class AccountServiceImpl implements AccountService {
 
         kafkaTemplate.send(accountEventTopic, accountCreatedEvent);
 
-        Cart cart = cartService.save(account.getCode());
-        account.setCartCode(cart.getCode());
+//        Cart cart = cartService.save(account.getCode());
+//        account.setCartCode(cart.getCode());
 
         Deposit deposit = depositService.save(account.getCode());
         account.setDepositCode(deposit.getCode());
@@ -64,6 +66,16 @@ public class AccountServiceImpl implements AccountService {
     public Account getByAccountCode(String accountCode) {
         return accountRepository.findByCode(accountCode)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
+    }
+
+    @Override
+    @Transactional
+    public Account applyCartCode(String accountCode, String cartCode) {
+
+        Account foundAccount = getByAccountCode(accountCode);
+        foundAccount.setCartCode(cartCode);
+
+        return foundAccount;
     }
 
 }
