@@ -18,7 +18,25 @@ spring:
       enabled: true
       path: /h2-console
 
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    consumer:
+      group-id: demo-service
+
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: io.eddie.demo.common.model.event.*
+        allow.auto.create.topics: true
+
 custom:
+
   payments:
     toss:
       confirm-url: "https://api.tosspayments.com/v1/payments/confirm"
@@ -28,3 +46,12 @@ custom:
     secrets:
       app-key: A5A10BC17B4E653C78BDD55FFFD9DEE3BE5790CD6F3F64DC1E82E791F9821C17
     expiration: 600000000
+
+  kafka:
+
+    topic:
+      account:
+        event: account-event
+
+      cart:
+        command: cart-command

@@ -32,8 +32,8 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 @Slf4j
-@Component
-@Profile("!prod")
+//@Component
+//@Profile("!prod")
 @RequiredArgsConstructor
 public class DataInitializer implements ApplicationRunner {
 

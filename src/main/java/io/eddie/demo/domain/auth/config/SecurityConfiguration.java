@@ -63,7 +63,7 @@ public class SecurityConfiguration {
                                                             .requestMatchers(HttpMethod.GET, "/products/**")
                                                                 .permitAll()
                                                             .anyRequest()
-                                                                .authenticated()
+                                                                .permitAll()
                 )
 
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
